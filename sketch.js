@@ -1,6 +1,6 @@
 var helicopterIMG, helicopterSprite, packageSprite,packageIMG;
 var packageBody,ground;
-var box1, box2, box3;
+var rect1,rect2,rect3;
 
 const Engine = Matter.Engine;
 const World = Matter.World;
@@ -16,8 +16,16 @@ function preload() {
 function setup() {
 	createCanvas(800, 700);
 
-	rectMode(CENTER);
-	
+	rectMode(CENTER); 
+
+
+	rect1=createSprite(width/2,650, 200, 20);
+	rect1.shapeColor = "red";
+	rect2=createSprite(width/2.7,610, 20, 100);
+	rect2.shapeColor = "red";
+	rect3=createSprite(width/1.6,610, 20, 100);
+	rect3.shapeColor = "red";
+
 
 	packageSprite=createSprite(width/2, 80, 10,10);
 	packageSprite.addImage(packageIMG)
@@ -30,22 +38,28 @@ function setup() {
 	groundSprite=createSprite(width/2, height-35, width,10);
 	groundSprite.shapeColor=color(255)
 
+	box1 = createSprite(390,650,200,20);
+	box1.shapeColor=color("red");
+
+	box2 = createSprite(300,560,20,200);
+	box2.shapeColor=color("red");
+
+	box3 = createSprite(500,560,20,200);
+	box3.shapeColor=color("red");
+
+
 
 	engine = Engine.create();
 	world = engine.world;
 
-	packageBody = Bodies.circle(width/2 , 200 , 5 , {restitution:0, isStatic:true});
+	packageBody = Bodies.circle(width/2 , 200 , 5 , {restitution:0.4, isStatic:true});
 	World.add(world, packageBody);
 	
 
 	//Create a Ground
 	ground = Bodies.rectangle(width/2, 650, width, 10 , {isStatic:true} );
- 	World.add(world, ground);
-
-	box1 = new Box(390,650,200,20);
-	box2 = new Box(300,560,20,200);
-	box3 = new Box(500,560,20,200);
-
+	 World.add(world, ground);
+	
 	Engine.run(engine);
   
 }
@@ -58,10 +72,6 @@ function draw() {
  
   packageSprite.x= packageBody.position.x 
   packageSprite.y= packageBody.position.y 
-  
-  box1.display();
-  box2.display();
-  box3.display();
 
   drawSprites();
 
@@ -73,7 +83,68 @@ function keyPressed() {
  if (keyDown(DOWN_ARROW)) {
     // Look at the hints in the document and understand how to make the package body fall only on press of the Down arrow key.
 	 Matter.Body.setStatic(packageBody,false);
-	 
+
 	 Engine.update(engine);
   }
 }
+
+
+
+
+
+
+function setup() {
+	createCanvas(800, 700);
+	rectMode(CENTER);
+	
+	groundSprite=createSprite(width/2, height-35, width,10);
+	groundSprite.shapeColor=color(255)
+
+	rect1=createSprite(width/2,650, 200, 20);
+	rect1.shapeColor = "red";
+	rect2=createSprite(width/2.7,610, 20, 100);
+	rect2.shapeColor = "red";
+	rect3=createSprite(width/1.6,610, 20, 100);
+	rect3.shapeColor = "red";
+
+	packageSprite=createSprite(width/2, 80, 10,10);
+	packageSprite.addImage(packageIMG)
+	packageSprite.scale=0.2
+
+	helicopterSprite=createSprite(width/2, 200, 10,10);
+	helicopterSprite.addImage(helicopterIMG)
+	helicopterSprite.scale=0.6
+
+	engine = Engine.create();
+	world = engine.world;
+	
+	//Create a Ground
+	ground = Bodies.rectangle(width/2, 650, width, 10 , {isStatic:true} );
+	World.add(world, ground);
+
+	packageBody = Bodies.circle(width/2 , 200 , 23 , {restitution: 0.4, isStatic:true});
+	World.add(world, packageBody);
+	
+	Engine.run(engine);
+  
+}
+
+
+function draw() {  
+  background(0);
+  packageSprite.x= packageBody.position.x 
+  packageSprite.y= packageBody.position.y 
+  drawSprites(); 
+
+  rect1.display();
+}
+
+function keyPressed() {
+ if (keyCode === DOWN_ARROW) {
+    // Look at the hints in the document and understand how to make the package body fall only on
+	Body.setStatic(packageBody, false);
+
+  }
+}
+
+
